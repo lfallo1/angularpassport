@@ -7,12 +7,20 @@ var LocalStrategy = require('passport-local').Strategy;
 //==================================================================
 // Define the strategy to be used by PassportJS
 passport.use(new LocalStrategy(
-  function(username, password, done) {
-    if (username === "admin" && password === "admin") // stupid example
-      return done(null, {name: "admin"});
 
-    return done(null, false, { message: 'Incorrect username.' });
-  }
+    function(username, password, done) {
+
+        if (!(username === "admin" && password === "admin")) { return done(new Error('wrong pass stupid')); }
+      return done(null, {name : 'admin'});
+
+    }
+
+  //function(username, password, done) {
+  //  if (username === "admin" && password === "admin") // stupid example
+  //    return done(null, {name: "admin"});
+  //
+  //  return done(null, false, { message: 'Incorrect username stupidhead.' });
+  //}
 ));
 
 // Serialized and deserialized methods when got from session
@@ -75,7 +83,7 @@ app.get('/loggedin', function(req, res) {
 
 // route to log in
 app.post('/login', passport.authenticate('local'), function(req, res) {
-  res.send(req.user);
+  res.send('got it');
 });
 
 // route to log out

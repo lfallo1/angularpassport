@@ -98,13 +98,15 @@ app.controller('LoginCtrl', function($scope, $rootScope, $http, $location) {
       username: $scope.user.username,
       password: $scope.user.password,
     })
-    .success(function(user){
+    .success(function(msg){
       // No error: authentication OK
+          console.log(msg);
       $rootScope.message = 'Authentication successful!';
       $location.url('/admin');
     })
-    .error(function(){
+    .error(function(err){
       // Error: authentication failed
+          console.log(err.error.message);
       $rootScope.message = 'Authentication failed.';
       $location.url('/login');
     });
